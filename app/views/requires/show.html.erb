@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-md-4">
+	  <img src="assets/icon.png"  class="book" >
+	</div>
+
+	<div class="col-md-8">
+		<h2><%= @book.title %></h2>
+		<h3><%= @book.author %></h3>
+		<p><%= @book.description %></p>
+		<p><%= @book.comment %></p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+	</div>
+</div>
+
+ <% if admin? %>
+ <%= link_to 'Delete', require_path(@book), method: :delete, data: {confirm: "are you sure"}  %>
+ <% end %>

@@ -1,0 +1,14 @@
+<% if @book.count == 0 %>
+<h1> không có sách nào  </h1>
+
+<% else %> 
+
+<div class="row">
+<% @book.each do |minh| %>
+   <a href="/books/<%=minh.id %>">
+   <%= image_tag minh.book_img.url(:book_index), class: "book" %>
+   </a>
+   
+<% end %>
+</div>
+<% end %>	

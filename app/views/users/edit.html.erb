@@ -1,0 +1,11 @@
+<h1>EDIT PAGE </h1>
+
+<%= simple_form_for @user, :html => { :multipart => true } do |f| %>
+ <%= f.input :name, label: "Username", disabled:true %>
+ <%= f.file_field :user_img, label: "Avatar" %>
+ <%= f.input :email, placeholder: 'user@domain.com' , required:true%>
+  <%= f.input :password, hint: 'No special characters.', input_html: { minlength: 6 }  , required:true%>
+ <%= f.input :password, hint: 'No special characters.', input_html: { minlength: 6 }  , required:true%>
+ <%= f.input :password_confirmation , required:true%>
+ <%= f.submit %>
+ <% end %>

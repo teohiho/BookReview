@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project2</title>
+    <%= csrf_meta_tags %>
+    	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		
+		<!-- Google font (font-family: 'Roboto', sans-serif; Poppins ; Satisfy) -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,600,600i,700,700i,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> 
+	  
+  </head>
+
+  <body class="all">
+  <div class="wrapper" id="wrapper">
+  <!-- Header -->
+  <header id="wn__header" class="header__area header__absolute sticky__header">
+	  <div class="container-fluid">
+		  <div class="row">
+			  <div class="col-md-6 col-sm-6 col-6 col-lg-2">
+				  <div class="logo">
+				  	<%= link_to image_tag("logo.png", :border=>0), root_path, class: "navbar-brand" %>
+				  </div>
+			  </div>
+			  <div class="col-lg-8 d-none d-lg-block">
+				  <nav class="mainmenu__nav">
+					  <ul class="meninmenu d-flex justify-content-start">
+							<li class="drop with--one--item">
+							<%= link_to "Home", root_path %>
+							</li>
+						  <li class="drop">
+							  <a href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Books <span class="caret"></span></a>
+							  <div class="megamenu dropdown">
+								  <ul class="item item01">
+									  <li class="title">Categories</li>
+										<% Category.all.each do |category| %>
+											<li>
+											<%= link_to category.name, books_path(category: category.name), class: "link" %> 
+											</li>  
+										<% end %> 
+								  </ul>
+							  </div>
+						  </li>
+						<li><a href="contact.html">Contact</a></li>
+					  </ul>
+				  </nav>
+			  </div>
+			  <div class="col-md-6 col-sm-6 col-6 col-lg-2">
+				  <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
+				  		<! SEARCH !>
+				  		<li class="shop_search">
+							<form class="navbar-form navbar-left">
+								<%= form_tag(books_path, :method => "get", id: "search-form") do %>
+									<ul class="header__sidebar__right d-flex justify-content-end align-items-center">
+										<li class="shop_search">
+											<%= text_field_tag :search, params[:search], placeholder: "Type anything here" , class: 'form-control'%>
+										</li>
+										<li class="shop_search">
+											<%= submit_tag "Search", :name => nil , class: 'btn btn-default'%>
+										</li>
+									</ul>
+								<% end %>                               
+							</form>
+						</li>
+						<% if logged_in? %>
+							<li class="setting__bar__icon">
+								<nav class="mainmenu__nav">
+									<ul class="meninmenu d-flex justify-content-start">
+										<! NOTI !>
+										<li class="drop">
+											<button class="btn btn-default btn-lg btn-link" style="font-size:23px;    color: white;">
+												<span class="glyphicon glyphicon-bell"></span>
+											</button>
+											<span class="badge badge-notify">3</span>
+											<div class="megamenu mega02">
+												<ul class="item item01 ">
+													<li class="title">USER</li>
+													<li>
+														<div class="media">
+															<div class="media-left">
+																<a href="#">
+																ABC
+																</a>
+															</div>
+															<div class="media-body">
+																<h4 class="media-heading">XYZ</h4>
+																MLH
+															</div>
+														</div>                 
+													</li>
+												</ul>
+											</div>
+										</li>
+										<! // NOTI !>
+										<! USER !>
+										<li class="drop">
+											<a href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+												<img class="avatar" alt="<%= @current_user.name %>" src="<%= @current_user.user_img.url(:user_index) %>">
+											</a>
+											<div class="megamenu mega01">
+												<ul class="item item01 ">
+													<li class="title">Setting</li>
+													<li>
+														<div class="media">
+															<div class="media-left">
+																<a href="#">
+																<img class="profile-images1" class="media-object" src="<%= @current_user.user_img.url(:user_index) %>" alt="...">
+																</a>
+															</div>
+															<div class="media-body">
+																<h4 class="media-heading"><%= @current_user.name %></h4>
+																<%= @current_user.email %>
+															</div>
+														</div>                 
+													</li>
+													<li>
+														<div class="row">
+															<div class="col-sm-4 col-md-4">
+																<p>
+
+																<% if !admin? %>
+																<a href="<%=new_require_path%>" class="btn btn-primary"  role="button">yêu cầu sách</a>
+																<% else %>
+																<a href="<%=requires_path%>" class="btn btn-primary"  role="button">yêu cầu sách</a>
+																<% end %>
+																	<a href="<%=edit_user_path(@current_user)%>" class="btn btn-primary"  role="button">cài đặt</a> 
+																	<a href="<%=user_path(@current_user)%>" class="btn btn-primary" role="button">Profile</a> 
+																</p>
+															</div>
+														</div>
+													</li>
+													
+													<li>
+														<%= link_to  "Log out", logout_path, method: :delete,  class: "text btn btn-danger" %>
+													</li> 
+												</ul>
+											</div>
+										</li>
+										<! // USER !>
+									</ul>
+								</nav>
+							</li>
+							<% if admin? %>
+								<li><%= link_to "Addbook", new_book_path %></li>
+							<% end %> 
+						<% else %> 
+							<li class="drop with--one--item">
+								<%= link_to "Resigter", new_user_path %>
+							</li>
+							<li class="drop with--one--item">
+								<%= link_to "Login", login_path %>
+							</li>
+						<% end %> 
+
+				  </ul>
+			  </div>
+		  </div>
+
+	  </div>		
+  </header>
+
+      <!hiện thông báo đăng nhập!>
+    <section class="content" style="min-height: 170px;">
+      <% flash.each do |key, value| %>
+        <div class="row">
+          <div class="alert alert-<%= key %>">
+            <%= value %>
+
+          </div>
+        </div>
+      <% end %>
+    </section>
+
+    <div class="container">
+    <%= yield %>
+  </div>
+
+
+  </body>
+</html>

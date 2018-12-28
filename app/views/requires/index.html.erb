@@ -1,0 +1,41 @@
+
+<% if @books.count == 0 %>
+<h1> không có yêu cầu nào  </h1>
+
+<% else %> 
+
+<div class="row">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Book's Name</th>
+        <th>Author</th>
+        <th>Book's Description</th>
+        <th>Comment</th>
+        <th>Request By</th>
+        <th>Time Requested</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+  <% @books.each do |r| %>
+    <tr>
+      <td>
+        <a href="/requires/<%=r.id %>"><%= r.title %></a>
+      </td>
+      <td><%= r.author %></td>
+      <td><%= r.description %></td>
+      <td><%= r.comment %></td>
+      <td><%= r.user.name %></td>
+      <td><%= "#{time_ago_in_words(r.created_at)} ago"%></td>
+    </tr>
+<% end %>
+    </tbody>
+
+</table>
+</div>
+
+<% end %>	
+

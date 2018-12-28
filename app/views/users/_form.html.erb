@@ -1,0 +1,10 @@
+
+<%= simple_form_for @user, :html => { :multipart => true }, validate:true do |f| %>
+ <%= f.input :name, label: "Username"%>
+ <%= f.file_field :user_img, label: "Avatar" %>
+ <%= f.input :email, placeholder: 'user@domain.com' %>
+ <%= f.input :password,  presence:true%>
+ <%= f.input :password_confirmation , required:true%>
+
+ <%= f.submit %>
+ <% end %>
